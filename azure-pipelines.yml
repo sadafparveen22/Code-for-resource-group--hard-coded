@@ -11,3 +11,54 @@ steps:
       # Write your PowerShell commands here.
       
       Write-Host "Hello sadaf"
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Check and install Terraform if not present
+      Write-Host "🔍 Checking if Terraform is installed..." -ForegroundColor Cyan
+      
+      # Try to get Terraform version
+      $terraformVersion = terraform -version 2>$null
+      
+      if ($LASTEXITCODE -eq 0) {
+          Write-Host "✅ Terraform is already installed."
+          terraform -version
+      } 
+      else {
+          Write-Host "⚠️ Terraform not found. Installing Terraform..." -ForegroundColor Yellow
+      
+          # Define variables
+          $terraformVersion = "1.9.8"  # you can update version here
+          $terraformZip = "terraform_${terraformVersion}_windows_amd64.zip"
+          $downloadUrl = "https://releases.hashicorp.com/terraform/${terraformVersion}/${terraformZip}"
+          $installPath = "C:\terraform"
+      
+          # Create directory if not exists
+          if (!(Test-Path $installPath)) {
+              New-Item -ItemType Directory -Path $installPath | Out-Null
+          }
+      
+          # Download Terraform zip
+          $zipPath = "$installPath\$terraformZip"
+          Write-Host "⬇️ Downloading Terraform from $downloadUrl..."
+          Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath
+      
+          # Extract Terraform binary
+          Write-Host "📦 Extracting Terraform..."
+          Expand-Archive -Path $zipPath -DestinationPath $installPath -Force
+      
+          # Add to PATH (for current session)
+          Write-Host "🛠 Adding Terraform to PATH..."
+          $env:Path += ";$installPath"
+      
+          # Optional: persist PATH for all sessions
+          [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$installPath", [EnvironmentVariableTarget]::Machine)
+      
+          # Cleanup
+          Remove-Item $zipPath -Force
+      
+          Write-Host "✅ Terraform installed successfully!"
+          terraform -version
+      }
+
