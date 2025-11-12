@@ -62,3 +62,12 @@ steps:
           terraform -version
       }
 
+#$(System.DefaultWorkingDirectory)
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    # backendServiceArm: 'service-connection'
+    # backendAzureRmStorageAccountName: 'sss'
+    # backendAzureRmContainerName: 'sss'
+    # backendAzureRmKey: 'sss'
