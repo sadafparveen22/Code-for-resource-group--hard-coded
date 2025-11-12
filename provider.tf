@@ -5,7 +5,6 @@ terraform {
     container_name       = "tijori"                                  # Can be passed via `-backend-config=`"container_name=<container name>"` in the `init` command.
     key                  = "abc.tfstate"                   # Can be passed via `-backend-config=`"key=<blob key name>"` in the `init` command.
   }
-}
     required_providers {
       azurerm = {
         source = "hashicorp/azurerm"
