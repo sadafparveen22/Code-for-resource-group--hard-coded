@@ -71,3 +71,8 @@ steps:
     backendAzureRmStorageAccountName: 'tokri'
     backendAzureRmContainerName: 'tijori'
     backendAzureRmKey: 'abc.tfstate'
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: 'service-connection'
