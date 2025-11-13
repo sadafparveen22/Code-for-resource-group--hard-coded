@@ -13,4 +13,22 @@ steps:
     backendAzureRmContainerName: 'tijori'
     backendAzureRmKey: 'rimjhim.tfstate'
 
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'validate'
 
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    environmentServiceNameAzureRM: 'service-connection'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'service-connection'
