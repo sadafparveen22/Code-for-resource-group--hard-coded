@@ -1,0 +1,16 @@
+trigger: none
+
+pool: Agent
+
+steps:
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    backendServiceArm: 'service-connection'
+    backendAzureRmStorageAccountName: 'tokri'
+    backendAzureRmContainerName: 'tijori'
+    backendAzureRmKey: 'rimjhim.tfstate'
+
+
