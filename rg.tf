@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "rg_12"{
-name = "hoota"
+resource "azurerm_resource_group" "rg"{
+name = "joota"
 location = "westus"
 }
