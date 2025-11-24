@@ -24,3 +24,9 @@ stages:
             backendAzureRmStorageAccountName: 'tokri'
             backendAzureRmContainerName: 'tijori'
             backendAzureRmKey: 'abc.tfstate'
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: '$(System.DefaultWorkingDirectory)/'
+            artifact: 'initartifacts'
+            publishLocation: 'pipeline'
+        
