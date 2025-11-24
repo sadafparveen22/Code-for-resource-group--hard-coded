@@ -1,0 +1,18 @@
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/'
+    backendServiceArm: 'latest-svc'
+    backendAzureRmStorageAccountName: 'tokri'
+    backendAzureRmContainerName: 'tijori'
+    backendAzureRmKey: 'abc.tfstate'
